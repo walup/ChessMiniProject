@@ -167,7 +167,7 @@ class ChessPiece:
             if(boardPosition[1]-2 >= 0):
                 if(boardPosition[0]+1 <= 7 and not (occupiedPositions[boardPosition[0]+1, boardPosition[1]-2] == 1 and enemyPositions[boardPosition[0]+1, boardPosition[1]-2] == 0)):
                     downLPosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+1, boardPosition[1]-2)
-                    downLMove = ChessMove([self.file, self.rank], downLPosition, enemyPositions[boardPosition[0]+1, boardPosition[1]-3] == 1)
+                    downLMove = ChessMove([self.file, self.rank], downLPosition, enemyPositions[boardPosition[0]+1, boardPosition[1]-2] == 1)
                     self.addMove(downLMove)
                 if(boardPosition[0]-1 >= 0 and not (occupiedPositions[boardPosition[0]-1, boardPosition[1]-2] == 1 and enemyPositions[boardPosition[0]-1, boardPosition[1]-2] == 0 )):
                     upLPosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-1, boardPosition[1] - 2)
@@ -420,7 +420,10 @@ class ChessPiece:
     def printMoves(self):
         print(str(len(self.availableMoves))+ " moves")
         for i in range(0,len(self.availableMoves)):
-            print("["+str(self.availableMoves[i].toPosition[0])+","+str(self.availableMoves[i].toPosition[1])+"]")
+            s = "["+str(self.availableMoves[i].toPosition[0])+","+str(self.availableMoves[i].toPosition[1])+"]"
+            if(self.availableMoves[i].take):
+                s = s + " take"
+            print(s)
 
 class Chessboard:
     
@@ -527,18 +530,26 @@ class Chessboard:
             elif(self.pieces[i].pieceColor == ChessPieceColor.BLACK):
                 self.pieces[i].computeNewMoves(self.occupiedPositions, self.whitePiecesPositions)
     
-    def findPieceIndexAtPosition(self, rank, file):
+    def findPieceIndexAtPosition(self, file, rank):
         for i in range(0,len(self.pieces)):
             piece = self.pieces[i]
-            if(piece.file == rank and piece.rank == file):
+            if(piece.file == file and piece.rank == rank):
                 return i
         
         return -1
     
-    def findColorPieceIndexAtPosition(self, rank, file, color):
+    def findPieceAtPosition(self, file, rank):
         for i in range(0,len(self.pieces)):
             piece = self.pieces[i]
-            if(piece.file == rank and piece.rank == file and piece.pieceColor == color):
+            if(piece.file == file and piece.rank == rank):
+                return piece
+        
+        return -1
+    
+    def findColorPieceIndexAtPosition(self, file, rank, color):
+        for i in range(0,len(self.pieces)):
+            piece = self.pieces[i]
+            if(piece.file == file and piece.rank == rank and piece.pieceColor == color):
                 return i
         
         return -1
@@ -608,5 +619,13 @@ class Chessboard:
             annotationBox = AnnotationBbox(imageBox, (pieceCoordinates[0]+0.5,pieceCoordinates[1]-1+0.5), frameon = False)
             ax.add_artist(annotationBox)
         
+        xTickPositions = [i + 0.5 for i in range(0,8)]
+        yTickPositions = [i+0.5 for i in range(0,8)]
+        yTickText = [str(i) for i in range(1,9)]
+        
         ax.set_xlim([0,self.boardWidth])
         ax.set_ylim([0,self.boardHeight])
+        ax.set_xticklabels(coordTranslator.fileNotation)
+        ax.set_xticks(xTickPositions)
+        ax.set_yticks(yTickPositions)
+        ax.set_yticklabels(yTickText)

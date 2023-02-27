@@ -1,6 +1,7 @@
 from ChessGame import CoordinateTranslator
 import matplotlib.pyplot as plt
 import numpy as np
+from ChessGame import ChessPieceColor
 
 
 class ChessNode:
@@ -85,6 +86,34 @@ class Chessgraph:
                 #For now all connections will have equal weight
                 self.addConnection(fromPositionId, toPositionId, 1)
     
+    def initializeFromChessboardColored(self, chessboard, piecesColor):
+        self.restartGraph()
+        coordinateTranslator = CoordinateTranslator()
+        for i in range(0,8):
+            for j in range(0,8):
+                chessCoords = coordinateTranslator.reverseTranslateCoordinates(i,j)
+                chessCoords2 = coordinateTranslator.translateCoordinatesForImage(chessCoords[0], chessCoords[1])
+                nodeName = chessCoords[0] + str(chessCoords[1])
+                node = ChessNode(nodeName, chessCoords2[0], chessCoords[1], self.nodesColor)
+                self.addNode(node)
+        
+        pieces = chessboard.pieces
+        nPieces = len(pieces)
+        for i in range(0,nPieces):
+            piece = pieces[i]
+            if((piecesColor == ChessPieceColor.WHITE and piece.pieceColor == ChessPieceColor.WHITE) or (piecesColor == ChessPieceColor.BLACK and piece.pieceColor == ChessPieceColor.BLACK)):
+                pieceMoves = piece.availableMoves
+                for j in range(0,len(pieceMoves)):
+                    move = pieceMoves[j]
+                    fromPosition = move.fromPosition
+                    toPosition = move.toPosition
+                    fromPositionId = fromPosition[0] + str(fromPosition[1])
+                    toPositionId = toPosition[0] + str(toPosition[1])
+                    #All weights are 1 in this initial version of the code
+                    self.addConnection(fromPositionId, toPositionId, 1)
+            
+                    
+    
     def addConnection(self, startNodeId, endNodeId, weight):
         if(self.containsNode(startNodeId) and self.containsNode(endNodeId)):
             newConnection = ChessConnection(startNodeId, endNodeId, weight)
@@ -126,4 +155,18 @@ class Chessgraph:
             degreeDistribution[len(connections)] += 1
         
         return list(range(0,64)), degreeDistribution
+    
+    def getMeanDegree(self):
+        xVals, yVals = self.getDegreeDistribution()
+        if(sum(yVals) > 0):
+            yVals = yVals/sum(yVals)
+            meanDegree = 0
+            for i in range(0,len(xVals)):
+                meanDegree = meanDegree + xVals[i]*yVals[i]
+            
+            return meanDegree
+        
+        return 0
+        
+        
             
