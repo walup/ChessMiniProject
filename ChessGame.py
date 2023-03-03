@@ -86,6 +86,16 @@ class ChessPiece:
                 self.addMove(forwardMove)
                 self.addMove(twoForwardMove)
                 
+                if(boardPosition[0] - 1 >= 0 and boardPosition[1] - 1 >= 0 and enemyPositions[boardPosition[0]-1, boardPosition[1]-1] == 1):
+                    diagonalTakePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-1, boardPosition[1]-1)
+                    diagonalTake = ChessMove([self.file, self.rank], diagonalTakePosition, True)
+                    self.addMove(diagonalTake)
+                #Right diagonal take
+                if(boardPosition[0]-1 >= 0 and boardPosition[1] + 1 <=7 and enemyPositions[boardPosition[0]-1, boardPosition[1] + 1] == 1):
+                    diagonalTakePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-1, boardPosition[1]+1)
+                    diagonalTake = ChessMove([self.file, self.rank], diagonalTakePosition, True)
+                    self.addMove(diagonalTake)
+                
             elif(self.pieceColor == ChessPieceColor.BLACK):
                 forwardMovePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+1, boardPosition[1])
                 twoForwardMovePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+2, boardPosition[1])
@@ -93,6 +103,16 @@ class ChessPiece:
                 twoForwardMove = ChessMove([self.file, self.rank], twoForwardMovePosition, False)
                 self.addMove(forwardMove)
                 self.addMove(twoForwardMove)
+                
+                if(boardPosition[0] + 1 <= 7 and boardPosition[1] - 1 >= 0 and enemyPositions[boardPosition[0]+1, boardPosition[1]-1] == 1):
+                    diagonalTakePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+1, boardPosition[1]-1)
+                    diagonalTake = ChessMove([self.file, self.rank], diagonalTakePosition, True)
+                    self.addMove(diagonalTake)
+                #Right diagonal take
+                if(boardPosition[0]+1 <=7 and boardPosition[1] + 1 <=7 and enemyPositions[boardPosition[0]+1, boardPosition[1] + 1] == 1):
+                    diagonalTakePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+1, boardPosition[1]+1)
+                    diagonalTake = ChessMove([self.file, self.rank], diagonalTakePosition, True)
+                    self.addMove(diagonalTake)
         
         #Pawn movements
         elif(self.pieceType == ChessPieceType.PAWN):
@@ -545,6 +565,15 @@ class Chessboard:
                 return piece
         
         return -1
+    
+    def findPieceOfTypeThatCanGoToPosition(self, pieceType, file, rank, pieceColor):
+        for i in range(0,len(self.pieces)):
+            piece = self.pieces[i]
+            if(piece.pieceType == pieceType and piece.pieceColor == pieceColor):
+                pieceMoves = piece.availableMoves
+                for j in range(0,len(pieceMoves)):
+                    if(pieceMoves[j].toPosition[0] == file and pieceMoves[j].toPosition[1] == rank):
+                        return piece
     
     def findColorPieceIndexAtPosition(self, file, rank, color):
         for i in range(0,len(self.pieces)):
