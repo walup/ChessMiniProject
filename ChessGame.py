@@ -197,7 +197,7 @@ class ChessPiece:
         #Bishop movements
         elif(self.pieceType == ChessPieceType.BISHOP):
             #Inverted Forward Diagonal
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]-i >= 0 and boardPosition[0]-i <= 7 and boardPosition[1]-i >= 0 and boardPosition[1]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-i, boardPosition[1]-i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0]-i, boardPosition[1]-i] == 1)
@@ -210,7 +210,7 @@ class ChessPiece:
                         self.addMove(move)
             
             #Backwards diagonal
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]+i >= 0 and boardPosition[0]+i <= 7 and boardPosition[1]+i >= 0 and boardPosition[1]+i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+i, boardPosition[1]+i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0]+i, boardPosition[1]+i] == 1)
@@ -222,7 +222,7 @@ class ChessPiece:
                     else:
                         self.addMove(move)
 
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]+i >= 0 and boardPosition[0]+i <= 7 and boardPosition[1]-i >= 0 and boardPosition[1]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+i, boardPosition[1]-i)
                     #print("Moves: "+str(self.moveCount) + " "+str(movePosition))
@@ -236,7 +236,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]-i >= 0 and boardPosition[0]-i <= 7 and boardPosition[1]+i >= 0 and boardPosition[1]+i <= 7 and i!= 0):
                     #print("Moves: "+str(self.moveCount) + " "+str(movePosition))
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-i, boardPosition[1]+i)
@@ -252,7 +252,7 @@ class ChessPiece:
             
         #Rook movements
         elif(self.pieceType == ChessPieceType.ROOK):
-            for i in range(0,7):
+            for i in range(0,8):
                 
                 if(boardPosition[0]-i >= 0 and boardPosition[0]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-i, boardPosition[1])
@@ -265,7 +265,7 @@ class ChessPiece:
                     else:
                         self.addMove(move)
                         
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]+i >= 0 and boardPosition[0]+i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+i, boardPosition[1])
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0]+i, boardPosition[1]] == 1)
@@ -278,7 +278,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[1]-i >= 0 and boardPosition[1]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0], boardPosition[1]-i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0], boardPosition[1]-i] == 1)
@@ -291,7 +291,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[1]+i >= 0 and boardPosition[1]+i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0], boardPosition[1]+i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0], boardPosition[1]+i] == 1)
@@ -306,7 +306,7 @@ class ChessPiece:
         elif(self.pieceType == ChessPieceType.QUEEN):
             #Queen is a combination of rook and bishop so i'll just copy both codes
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]-i >= 0 and boardPosition[0]-i <= 7 and boardPosition[1]-i >= 0 and boardPosition[1]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-i, boardPosition[1]-i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0]-i, boardPosition[1]-i] == 1)
@@ -319,7 +319,7 @@ class ChessPiece:
                         self.addMove(move)
             
             #Backwards diagonal
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]+i >= 0 and boardPosition[0]+i <= 7 and boardPosition[1]+i >= 0 and boardPosition[1]+i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+i, boardPosition[1]+i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0]+i, boardPosition[1]+i] == 1)
@@ -331,7 +331,7 @@ class ChessPiece:
                     else:
                         self.addMove(move)
 
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]+i >= 0 and boardPosition[0]+i <= 7 and boardPosition[1]-i >= 0 and boardPosition[1]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+i, boardPosition[1]-i)
                     #print("Moves: "+str(self.moveCount) + " "+str(movePosition))
@@ -345,7 +345,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]-i >= 0 and boardPosition[0]-i <= 7 and boardPosition[1]+i >= 0 and boardPosition[1]+i <= 7 and i!= 0):
                     #print("Moves: "+str(self.moveCount) + " "+str(movePosition))
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-i, boardPosition[1]+i)
@@ -359,7 +359,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 
                 if(boardPosition[0]-i >= 0 and boardPosition[0]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]-i, boardPosition[1])
@@ -372,7 +372,7 @@ class ChessPiece:
                     else:
                         self.addMove(move)
                         
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[0]+i >= 0 and boardPosition[0]+i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0]+i, boardPosition[1])
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0]+i, boardPosition[1]] == 1)
@@ -385,7 +385,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[1]-i >= 0 and boardPosition[1]-i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0], boardPosition[1]-i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0], boardPosition[1]-i] == 1)
@@ -398,7 +398,7 @@ class ChessPiece:
                         self.addMove(move)
                         
             
-            for i in range(0,7):
+            for i in range(0,8):
                 if(boardPosition[1]+i >= 0 and boardPosition[1]+i <= 7 and i!= 0):
                     movePosition = coordinateTranslator.reverseTranslateCoordinates(boardPosition[0], boardPosition[1]+i)
                     move = ChessMove([self.file, self.rank], movePosition, enemyPositions[boardPosition[0], boardPosition[1]+i] == 1)
@@ -566,14 +566,17 @@ class Chessboard:
         
         return -1
     
-    def findPieceOfTypeThatCanGoToPosition(self, pieceType, file, rank, pieceColor):
+    def findPieceOfTypeThatCanGoToPosition(self, pieceType, file, rank, pieceColor, fromFile):
         for i in range(0,len(self.pieces)):
             piece = self.pieces[i]
             if(piece.pieceType == pieceType and piece.pieceColor == pieceColor):
                 pieceMoves = piece.availableMoves
                 for j in range(0,len(pieceMoves)):
                     if(pieceMoves[j].toPosition[0] == file and pieceMoves[j].toPosition[1] == rank):
-                        return piece
+                        if(fromFile != -1 and piece.file == fromFile):
+                            return piece
+                        elif(fromFile == -1):
+                            return piece
     
     def findColorPieceIndexAtPosition(self, file, rank, color):
         for i in range(0,len(self.pieces)):

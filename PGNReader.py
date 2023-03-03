@@ -60,7 +60,8 @@ class PGNReader:
         moveCounter = 0
         for i in range(0,len(stringMoves)):
             #print(stringMoves[i])
-            if(not "." in stringMoves[i] and not "-" in stringMoves[i] and stringMoves[i] != ""):
+            if(not "." in stringMoves[i] and not "-" in stringMoves[i] and stringMoves[i] != "" and stringMoves[i] != "\n"):
+        
                 moveString = stringMoves[i]
                 moveString = moveString.replace('+','')
                 moveString = moveString.replace('#','')
@@ -68,6 +69,8 @@ class PGNReader:
                 moveString = moveString.replace('\r','')
                 pieceType = self.parsePieceType(moveString)
                 takeValue = self.parseTakeValue(moveString)
+                fromFile = self.parseFromFile(moveString)
+                
                 moveSegment = moveString[-2:]
                 file = moveSegment[0].upper()
                 rank = int(moveSegment[1])
@@ -76,7 +79,7 @@ class PGNReader:
                     pieceColor = ChessPieceColor.WHITE
                 else:
                     pieceColor = ChessPieceColor.BLACK
-                piece = board.findPieceOfTypeThatCanGoToPosition(pieceType, file, rank, pieceColor)
+                piece = board.findPieceOfTypeThatCanGoToPosition(pieceType, file, rank, pieceColor, fromFile)
                 move = ChessMove([piece.file, piece.rank],[file, rank], takeValue)
                 self.moves.append(move)
                 board.makeMove(move, False)
@@ -132,6 +135,28 @@ class PGNReader:
                     moveCounter += 1  
         board.displayBoard()
                     
+    #I don't know how to do this efficiently so i'll do it
+    #in the stupidest way
+    def parseFromFile(self, moveString):
+        residual = moveString[:-2]
+        if("a" in residual):
+            return "A"
+        elif("b" in residual):
+            return "B"
+        elif("c" in residual):
+            return "C"
+        elif("d" in residual):
+            return "D"
+        elif("e" in residual):
+            return "E"
+        elif("f") in residual:
+            return "F"
+        elif("g" in residual):
+            return "G"
+        elif("h" in residual):
+            return "H"
+        else:
+            return -1
     
     def parsePieceType(self, moveString):
         if(moveString[0] == "N"):
